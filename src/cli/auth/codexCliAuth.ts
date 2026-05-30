@@ -8,7 +8,29 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { BaseCliAuth } from './baseCliAuth';
 import { Logger } from '../../utils/logger';
+import { configProviders } from '../../providers/config';
 import type { CliAuthConfig, OAuthCredentials } from '../type';
+
+/**
+ * Codex API 返回的模型信息
+ * 用于动态模型列表与硬编码配置合并，以及 proRequired 判断
+ */
+export interface CodexModelInfo {
+    /** 模型标识（对应 API 响应中的 slug 字段） */
+    id: string;
+    /** 模型显示名称（对应 API 响应中的 display_name 字段） */
+    displayName: string;
+    /** 可见性：'list' 表示正常显示，'hide' 表示隐藏 */
+    visibility: string;
+    /** 可用计划列表（如 free、plus、pro 等），用于判断 proRequired */
+    availableInPlans: string[];
+    /** 上下文窗口大小（对应 context_window） */
+    contextWindow: number;
+    /** 最大上下文窗口大小（对应 max_context_window） */
+    maxContextWindow: number;
+    /** 支持的推理级别（对应 supported_reasoning_levels 中的 effort 字段） */
+    reasoningEfforts: string[];
+}
 
 /**
  * Codex OAuth 凭证扩展接口
@@ -28,6 +50,7 @@ const OPENAI_CODEX_TOKEN_URL = 'https://auth.openai.com/oauth/token';
  * OpenAI Codex CLI 认证类
  */
 export class CodexCliAuth extends BaseCliAuth {
+
     constructor() {
         const config: CliAuthConfig = {
             name: 'Codex',
@@ -223,6 +246,191 @@ export class CodexCliAuth extends BaseCliAuth {
     async getAccountId(): Promise<string | null> {
         const credentials = (await this.loadCredentials()) as CodexOAuthCredentials | null;
         return credentials?.account_id ?? null;
+    }
+
+    /**
+     * 获取 ChatGPT 订阅计划类型
+     * 通过 wham/usage API 查询账号信息中的 plan_type 字段（与状态栏一致）
+     * @returns 计划类型（如 'free', 'plus', 'pro'），查询失败时返回 null
+     */
+    async getPlanType(): Promise<string | null> {
+        const USAGE_QUERY_URL = 'https://chatgpt.com/backend-api/wham/usage';
+
+        try {
+            const credentials = await this.ensureAuthenticated();
+            if (!credentials || !credentials.access_token) {
+                return null;
+            }
+
+            const accountId = await this.getAccountId();
+            if (!accountId) {
+                return null;
+            }
+
+            const response = await fetch(USAGE_QUERY_URL, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${credentials.access_token}`,
+                    'user-agent': configProviders.codex.customHeader?.['user-agent'] as string,
+                    'chatgpt-account-id': accountId
+                }
+            });
+
+            if (!response.ok) {
+                Logger.debug(`[Codex] Failed to query plan type: HTTP ${response.status}`);
+                return null;
+            }
+
+            const data = await response.json() as { plan_type?: string };
+            const planType = data.plan_type;
+            if (typeof planType === 'string' && planType) {
+                Logger.debug(`[Codex] Plan type from usage API: ${planType}`);
+                return planType;
+            }
+
+            return null;
+        } catch (error) {
+            Logger.debug(`[Codex] Failed to get plan type: ${error instanceof Error ? error.message : String(error)}`);
+            return null;
+        }
+    }
+
+    /**
+     * 从 Codex API 获取可用模型列表
+     * 尝试从 /models 端点获取模型信息，与父类配置合并使用
+     * @returns 模型信息列表，获取失败时返回 null（调用方应使用硬编码配置作为降级）
+     */
+    async fetchAvailableModels(): Promise<CodexModelInfo[] | null> {
+        const MODELS_URL = `https://chatgpt.com/backend-api/codex/models?client_version=${configProviders.codex.customHeader?.['version']}`;
+
+        try {
+            const credentials = await this.ensureAuthenticated();
+            if (!credentials || !credentials.access_token) {
+                Logger.debug('[Codex] No credentials available for fetching models');
+                return null;
+            }
+
+            const accountId = await this.getAccountId();
+            if (!accountId) {
+                Logger.debug('[Codex] No account_id available for fetching models');
+                return null;
+            }
+
+            const response = await fetch(MODELS_URL, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${credentials.access_token}`,
+                    'user-agent': configProviders.codex.customHeader?.['user-agent'] as string,
+                    'chatgpt-account-id': accountId
+                }
+            });
+
+            if (!response.ok) {
+                Logger.debug(`[Codex] Failed to fetch models: HTTP ${response.status}`);
+                return null;
+            }
+
+            const text = await response.text();
+            let data: unknown;
+            try {
+                data = JSON.parse(text);
+            } catch {
+                Logger.debug('[Codex] Failed to parse models response as JSON');
+                return null;
+            }
+
+            // 从 API 响应中提取模型信息（过滤隐藏模型）
+            const models = this.extractModels(data);
+            if (models.length > 0) {
+                Logger.debug(`[Codex] Fetched ${models.length} available models: ${models.map(m => m.id).join(', ')}`);
+                return models;
+            }
+
+            Logger.debug('[Codex] No models found in response');
+            return null;
+        } catch (error) {
+            Logger.debug(`[Codex] Failed to fetch available models: ${error instanceof Error ? error.message : String(error)}`);
+            return null;
+        }
+    }
+
+    /**
+     * 从 API 响应中提取模型信息列表
+     * Codex API 实际响应格式: { models: [{ slug, visibility, available_in_plans, ... }] }
+     * 同时兼容其他格式: OpenAI {data:[...]} / 纯数组 [...] / 简单 {models:["id",...]}
+     */
+    private extractModels(data: unknown): CodexModelInfo[] {
+        const models: CodexModelInfo[] = [];
+
+        const extractFromItem = (item: unknown): CodexModelInfo | null => {
+            if (typeof item === 'string') {
+                return { id: item, displayName: item, visibility: 'list', availableInPlans: [], contextWindow: 200000, maxContextWindow: 200000, reasoningEfforts: ['low', 'medium', 'high'] };
+            }
+            if (item && typeof item === 'object') {
+                const obj = item as Record<string, unknown>;
+                // Codex API 使用 slug 作为模型 ID
+                const id = typeof obj.slug === 'string' ? obj.slug : typeof obj.id === 'string' ? (obj.id as string) : null;
+                if (!id) {
+                    return null;
+                }
+                // 提取显示名称，优先使用 display_name
+                const displayName = typeof obj.display_name === 'string' ? (obj.display_name as string) : id;
+                // 过滤隐藏模型（如 codex-auto-review）
+                const visibility = typeof obj.visibility === 'string' ? (obj.visibility as string) : 'list';
+                if (visibility === 'hide') {
+                    return null;
+                }
+                // 提取可用计划列表
+                const availableInPlans = Array.isArray(obj.available_in_plans)
+                    ? (obj.available_in_plans as string[])
+                    : [];
+                // 提取上下文窗口大小
+                const contextWindow = typeof obj.context_window === 'number' ? (obj.context_window as number) : 200000;
+                const maxContextWindow = typeof obj.max_context_window === 'number' ? (obj.max_context_window as number) : contextWindow;
+                // 提取支持的推理级别（supported_reasoning_levels 中的 effort 字段）
+                const reasoningEfforts: string[] = [];
+                if (Array.isArray(obj.supported_reasoning_levels)) {
+                    for (const level of obj.supported_reasoning_levels as Array<Record<string, unknown>>) {
+                        if (level && typeof level.effort === 'string') {
+                            reasoningEfforts.push(level.effort);
+                        }
+                    }
+                }
+                if (reasoningEfforts.length === 0) {
+                    reasoningEfforts.push('low', 'medium', 'high');
+                }
+                return { id, displayName, visibility, availableInPlans, contextWindow, maxContextWindow, reasoningEfforts };
+            }
+            return null;
+        };
+
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+            const obj = data as Record<string, unknown>;
+
+            // Codex 格式: { models: [{ slug, ... }] } 或 OpenAI 格式: { data: [{ id, ... }] }
+            const arrayContainer = Array.isArray(obj.models) ? obj.models : Array.isArray(obj.data) ? obj.data : null;
+            if (arrayContainer) {
+                for (const item of arrayContainer) {
+                    const model = extractFromItem(item);
+                    if (model) {
+                        models.push(model);
+                    }
+                }
+                return models;
+            }
+        }
+
+        // 纯数组格式
+        if (Array.isArray(data)) {
+            for (const item of data) {
+                const model = extractFromItem(item);
+                if (model) {
+                    models.push(model);
+                }
+            }
+        }
+
+        return models;
     }
 
     /**

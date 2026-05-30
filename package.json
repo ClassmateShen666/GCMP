@@ -246,6 +246,11 @@
                 "category": "GCMP"
             },
             {
+                "command": "gcmp.codex.refreshModels",
+                "title": "%command.codex.refreshModels%",
+                "category": "GCMP"
+            },
+            {
                 "command": "gcmp.compatible.manageModels",
                 "title": "%command.compatible.manageModels%",
                 "category": "GCMP"
