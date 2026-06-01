@@ -637,7 +637,7 @@ export class JsonSchemaProvider {
                                 default: false
                             }
                         },
-                        required: ['id'],
+                        required: ['id', 'name', 'provider', 'maxInputTokens', 'maxOutputTokens', 'capabilities'],
                         allOf: [
                             {
                                 if: {
