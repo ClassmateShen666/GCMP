@@ -480,15 +480,10 @@ export class ChatGPTStatusBar extends BaseStatusBarItem<ChatGPTStatusData> {
      * （plan_type 可能影响 proRequired 模型的可见性）
      */
     protected override onStatusDataUpdated(): void {
-        // 触发 Codex 提供商的模型列表刷新，使 proRequired 过滤逻辑重新评估
-        import('../utils/providerRegistry').then(({ getRegisteredProvider }) => {
-            const codexProvider = getRegisteredProvider('codex');
-            if (codexProvider) {
-                codexProvider._onDidChangeLanguageModelChatInformation.fire();
-                Logger.debug('[ChatGPTStatusBar] Notified Codex provider to refresh model list');
-            }
-        }).catch(err => {
-            Logger.debug(`[ChatGPTStatusBar] Failed to notify Codex provider: ${err}`);
-        });
+        // 触发 Codex 提供商的模型列表刷新（命令内部会处理缓存失效 + 事件通知）
+        void vscode.commands.executeCommand('gcmp.codex.refreshModels').then(
+            () => Logger.debug('[ChatGPTStatusBar] Requested Codex model list refresh'),
+            err => Logger.debug(`[ChatGPTStatusBar] Failed to request Codex refresh: ${err}`)
+        );
     }
 }
