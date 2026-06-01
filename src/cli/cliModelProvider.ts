@@ -200,7 +200,7 @@ export class CliModelProvider extends GenericModelProvider {
     }
 
     /**
-     * 从 Codex API 获取可用模型列表（带 5 分钟缓存）
+     * 从 Codex API 获取可用模型列表（带 1 小时缓存）
      * @returns 模型信息列表；获取失败返回 null（调用方应降级使用硬编码模型）
      */
     private async fetchCodexDynamicModels(): Promise<CodexModelInfo[] | null> {
