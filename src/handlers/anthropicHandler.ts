@@ -11,6 +11,7 @@ import { ApiKeyManager } from '../utils/apiKeyManager';
 import { Logger } from '../utils/logger';
 import { ConfigManager } from '../utils/configManager';
 import { VersionManager } from '../utils/versionManager';
+import { createOpenCodeHeaders } from '../utils/formatUtils';
 import { TokenUsagesManager } from '../usages/usagesManager';
 import { t } from '../utils/l10n';
 import type { ModelChatResponseOptions, ModelConfig, ProviderConfig } from '../types/sharedTypes';
@@ -114,7 +115,7 @@ export class AnthropicHandler {
 
         // 使用模型配置的 baseUrl 或提供商默认的 baseURL
         let baseUrl = modelConfig?.baseUrl || this.baseURL;
-        if (providerKey === 'minimax-coding') {
+        if (providerKey === 'minimax-token') {
             // 针对 MiniMax 国际站进行 baseUrl 覆盖设置
             const endpoint = ConfigManager.getMinimaxEndpoint();
             if (baseUrl && endpoint === 'minimax.io') {
@@ -209,7 +210,7 @@ export class AnthropicHandler {
             };
 
             // Minimax 图片桥接：添加模拟工具调用
-            if (modelConfig?.provider === 'minimax-coding') {
+            if (modelConfig?.provider === 'minimax-token') {
                 const realToolCount = tools.length;
                 const existingToolNames = new Set(tools.map(tool => tool.name));
                 const historicalTools = MiniMaxVisionBridge.collectHistoricalToolDefinitions(
@@ -282,7 +283,13 @@ export class AnthropicHandler {
             // const cacheCount = (JSON.stringify(createParams).match(/"cache_control"\s*:/g) || []).length;
             // Logger.warn(`[${model.name}] cache_control 数量: ${cacheCount}`);
 
-            const stream = await client.messages.create(createParams, { signal: abortController.signal });
+            // opencode 专有：传递请求级跟踪标识头
+            const anthropicStreamOptions: Record<string, unknown> = { signal: abortController.signal };
+            if (this.provider === 'opencode') {
+                anthropicStreamOptions.headers = createOpenCodeHeaders(requestId, sessionId);
+            }
+
+            const stream = await client.messages.create(createParams, anthropicStreamOptions);
 
             // 创建统一的流报告器
             const reporter = new StreamReporter({
@@ -295,7 +302,7 @@ export class AnthropicHandler {
             });
 
             // 回放 MiniMax 图片桥接工具结果（如适用）
-            if (modelConfig?.provider === 'minimax-coding') {
+            if (modelConfig?.provider === 'minimax-token') {
                 MiniMaxVisionBridge.replayVisionBridge(messages, (callId, resultParts) =>
                     reporter.reportToolResult(callId, resultParts)
                 );

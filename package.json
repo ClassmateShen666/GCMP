@@ -3,7 +3,7 @@
     "publisher": "vicanent",
     "displayName": "AI Chat Models",
     "description": "%extension.description%",
-    "version": "0.22.27",
+    "version": "0.23.3",
     "license": "MIT",
     "keywords": [
         "ai",
@@ -70,7 +70,9 @@
         "onLanguageModelProvider:gcmp.xiaomimimo",
         "onLanguageModelProvider:gcmp.gemini",
         "onLanguageModelProvider:gcmp.codex",
+        "onLanguageModelProvider:gcmp.grok",
         "onLanguageModelProvider:gcmp.baidu",
+        "onLanguageModelProvider:gcmp.opencode",
         "onLanguageModelProvider:gcmp.compatible",
         "onLanguageModelTool:gcmp_zhipuWebSearch",
         "onLanguageModelTool:gcmp_minimaxWebSearch",
@@ -96,13 +98,13 @@
                 "category": "GCMP"
             },
             {
-                "command": "gcmp.minimax.setCodingPlanApiKey",
-                "title": "%command.minimax.setCodingPlanApiKey%",
+                "command": "gcmp.minimax.setTokenPlanApiKey",
+                "title": "%command.minimax.setTokenPlanApiKey%",
                 "category": "GCMP"
             },
             {
-                "command": "gcmp.minimax.setCodingPlanEndpoint",
-                "title": "%command.minimax.setCodingPlanEndpoint%",
+                "command": "gcmp.minimax.setTokenPlanEndpoint",
+                "title": "%command.minimax.setTokenPlanEndpoint%",
                 "category": "GCMP"
             },
             {
@@ -236,6 +238,11 @@
                 "category": "GCMP"
             },
             {
+                "command": "gcmp.opencode.setApiKey",
+                "title": "%command.opencode.setApiKey%",
+                "category": "GCMP"
+            },
+            {
                 "command": "gcmp.gemini.configWizard",
                 "title": "%command.gemini.configWizard%",
                 "category": "GCMP"
@@ -248,6 +255,11 @@
             {
                 "command": "gcmp.codex.refreshModels",
                 "title": "%command.codex.refreshModels%",
+                "category": "GCMP"
+            },
+            {
+                "command": "gcmp.grok.configWizard",
+                "title": "%command.grok.configWizard%",
                 "category": "GCMP"
             },
             {
@@ -694,6 +706,11 @@
                 "managementCommand": "gcmp.baidu.configWizard"
             },
             {
+                "vendor": "gcmp.opencode",
+                "displayName": "GCMP · OpenCode",
+                "managementCommand": "gcmp.opencode.setApiKey"
+            },
+            {
                 "vendor": "gcmp.gemini",
                 "displayName": "GCMP · Gemini CLI",
                 "managementCommand": "gcmp.gemini.configWizard"
@@ -702,6 +719,11 @@
                 "vendor": "gcmp.codex",
                 "displayName": "GCMP · Codex CLI",
                 "managementCommand": "gcmp.codex.configWizard"
+            },
+            {
+                "vendor": "gcmp.grok",
+                "displayName": "GCMP · Grok Build",
+                "managementCommand": "gcmp.grok.configWizard"
             },
             {
                 "vendor": "gcmp.compatible",

@@ -39,12 +39,12 @@ Search for `GCMP` in the VS Code Extension Marketplace, or use the identifier: [
 
 ### [**MiniMax**](https://platform.minimaxi.com/login)
 
-- [**Coding Plan**](https://platform.minimaxi.com/subscribe/coding-plan): **MiniMax-M2.7** (HighSpeed), **MiniMax-M2.5** (HighSpeed), **MiniMax-M2.1**, **MiniMax-M2**
-    - **Search**: Integrated Coding Plan web search tool, supports `#minimaxWebSearch`.
-    - **Image recognition**: Integrated Coding Plan image understanding MCP — paste images or screenshots directly for Agent interaction.
-    - **Usage tracking**: Status bar displays remaining Coding Plan quota.
-    - [**International site**](https://platform.minimax.io/subscribe/coding-plan): Supports international site Coding Plan.
-- **PayGo**: **MiniMax-M2.7** (HighSpeed), **MiniMax-M2.5** (HighSpeed), **MiniMax-M2.1** (HighSpeed), **MiniMax-M2**
+- [**Token Plan**](https://platform.minimaxi.com/subscribe/token-plan): **MiniMax-M3**, **MiniMax-M2.7** (HighSpeed), **MiniMax-M2.5** (HighSpeed), **MiniMax-M2.1**, **MiniMax-M2**
+    - **Search**: Integrated Token Plan web search tool, supports `#minimaxWebSearch`.
+    - **Image recognition**: Integrated Token Plan image understanding MCP — paste images or screenshots directly for Agent interaction.
+    - **Usage tracking**: Status bar displays remaining Token Plan quota.
+    - [**International site**](https://platform.minimax.io/subscribe/token-plan): Supports international site Token Plan.
+- **PayGo**: **MiniMax-M3**, **MiniMax-M2.7** (HighSpeed), **MiniMax-M2.5** (HighSpeed), **MiniMax-M2.1** (HighSpeed), **MiniMax-M2**
 
 ### [**MoonshotAI**](https://platform.moonshot.cn/)
 
@@ -65,7 +65,7 @@ Search for `GCMP` in the VS Code Extension Marketplace, or use the identifier: [
     - Recommended: **Qwen3.6-Plus**, **Kimi-K2.5**, **GLM-5**, **MiniMax-M2.5**
     - More: **Qwen3.5-Plus**, **Qwen3-Max**, **Qwen3-Coder-Next**, **Qwen3-Coder-Plus**, **GLM-4.7**
 - [**Token Plan**](https://www.aliyun.com/benefit/scene/tokenplan): **Qwen3.7-Max**, **Qwen3.6-Plus**, **Qwen3.6-Flash**, **GLM-5.1**, **GLM-5**, **Kimi-K2.6**, **Kimi-K2.5**, **MiniMax-M2.5**, **DeepSeek-V4-Pro**, **DeepSeek-V4-Flash**, **DeepSeek-V3.2**
-- **Qwen series**: **Qwen3.7-Max**, **Qwen3.6-Max**, **Qwen3.6-Plus**, **Qwen3.6-Flash**, **Qwen3.5-Plus**, **Qwen3.5-Flash**, **Qwen3-Max**, **Qwen3-VL-Plus**, **Qwen3-VL-Flash**, **Qwen-Plus**, **Qwen-Flash**
+- **Qwen series**: **Qwen3.7-Plus**, **Qwen3.7-Max**, **Qwen3.6-Max**, **Qwen3.6-Plus**, **Qwen3.6-Flash**, **Qwen3.5-Plus**, **Qwen3.5-Flash**
 - **DeepSeek-V4**: **DeepSeek-V4-Flash**, **DeepSeek-V4-Pro**
 - **Search**: Integrated [Web Search MCP](https://bailian.console.aliyun.com/cn-beijing/?tab=doc#/doc/?type=model&url=3023217) tool (2,000/month), supports `#bailianWebSearch`. (Uses [DashScope API Key](https://bailian.console.aliyun.com/cn-beijing/?tab=model#/api-key), not the Coding Plan API Key)
 
@@ -93,7 +93,7 @@ Search for `GCMP` in the VS Code Extension Marketplace, or use the identifier: [
     - Hunyuan models: **Tencent HY 2.0 Instruct**, **Tencent HY 2.0 Think**
     - Open-source models: **GLM-5**, **Kimi-K2.5**, **MiniMax-M2.5**, **DeepSeek-V3.2**
 - [**Token Plan**](https://console.cloud.tencent.com/tokenhub/tokenplan): **HY 3 Preview**, **GLM-5.1**, **GLM-5**, **Kimi-K2.5**, **MiniMax-M2.7**, **MiniMax-M2.5**
-- [**TokenHub**](https://console.cloud.tencent.com/tokenhub/models): **HY 3 Preview**, **GLM-5.1**, **GLM-5-Turbo**, **GLM-5**, **DeepSeek-V4-Flash**, **DeepSeek-V4-Pro**, **DeepSeek-V3.2**, **Kimi-K2.6**, **Kimi-K2.5**, **MiniMax-M2.7**, **MiniMax-M2.5**
+- [**TokenHub**](https://console.cloud.tencent.com/tokenhub/models): **MiniMax-M3**,**HY 3 Preview**, **GLM-5.1**, **GLM-5V-Turbo**, **GLM-5-Turbo**, **GLM-5**, **DeepSeek-V4-Flash**, **DeepSeek-V4-Pro**, **DeepSeek-V3.2**, **Kimi-K2.6**, **Kimi-K2.5**, **MiniMax-M2.7**, **MiniMax-M2.5**
 - **Key configuration**: Tencent Cloud API keys are categorized into [paid model API Key](https://hunyuan.cloud.tencent.com/#/app/apiKeyManage), [Coding Plan API Key](https://console.cloud.tencent.com/tokenhub/codingplan), [Token Plan API Key](https://console.cloud.tencent.com/tokenhub/tokenplan), [DeepSeek API Key](https://console.cloud.tencent.com/lkeap/api), and [TokenHub API Key](https://console.cloud.tencent.com/tokenhub/apikey). Each must be generated from the correct key management page.
 
 ### [**Xiaomi MiMo**](https://platform.xiaomimimo.com/#/console/api-keys)
@@ -108,6 +108,11 @@ Search for `GCMP` in the VS Code Extension Marketplace, or use the identifier: [
 - **PayGo**: **DeepSeek-V4-Flash**, **DeepSeek-V4-Pro**, **DeepSeek-V3.2**, **GLM-5**, **GLM-5.1**, **Kimi-K2.5**, **MiniMax-M2.5**, **ERNIE-5.1**, **ERNIE-5.0**
 - [**Coding Plan**](https://cloud.baidu.com/product/codingplan): **DeepSeek-V4-Flash**, **DeepSeek-V4-Pro**, **GLM-5.1**, **DeepSeek-V3.2**, **GLM-5**, **Kimi-K2.5**, **MiniMax-M2.5**
 - **Key configuration**: Supports separate [Baidu Qianfan API Key](https://console.bce.baidu.com/qianfan/ais/console/apiKey) and [Coding Plan API Key](https://console.bce.baidu.com/qianfan/resource/subscribe).
+
+### [**OpenCode**](https://opencode.ai/)
+
+- [**Go**](https://opencode.ai/go?ref=2TEVV934MY): **GLM-5.1**, **GLM-5**, **Kimi-K2.6**, **Kimi-K2.5**, **DeepSeek-V4-Pro**, **DeepSeek-V4-Flash**, **MiniMax-M3**, **MiniMax-M2.7**, **MiniMax-M2.5**, **Qwen3.6-Plus**, **MiMo-V2.5-Pro**, **MiMo-V2.5**
+- **Zen**: **DeepSeek-V4-Flash**, **GLM-5.1**, **GLM-5**, **Kimi-K2.6**, **Kimi-K2.5**, **MiniMax-M2.7**, **MiniMax-M2.5**, **Qwen3.6-Plus**, **Qwen3.5-Plus**, **Grok-Build-0.1**
 
 ### Experimental CLI Authentication Providers
 
@@ -137,6 +142,20 @@ npm install -g @google/gemini-cli@latest
 
 - **Supported models**: **Gemini 2.5 Pro**, **Gemini 2.5 Flash**, **Gemini 2.5 Flash Lite**
 - **Preview models**: **Gemini 3.1 Pro (Preview)**, **Gemini 3.1 Pro (Custom Tools)**, **Gemini 3 Pro (Preview)**, **Gemini 3 Flash (Preview)**
+
+### [**Grok Build**](https://x.ai/cli) - xAI Grok Build
+
+xAI's official Grok Build coding assistant CLI tool. Supports OAuth authentication via the `grok` CLI (requires local installation).
+
+```bash
+# macOS / Linux
+curl -fsSL https://x.ai/cli/install.sh | bash
+
+# Windows PowerShell
+irm https://x.ai/cli/install.ps1 | iex
+```
+
+- **Supported models**: **Grok Build 0.1**
 
 </details>
 
@@ -506,11 +525,7 @@ This feature calls models via the **VS Code Language Model API**.
     "gcmp.commit.language": "chinese", // Generation language: chinese / english (fallback when auto mode language is unclear)
     "gcmp.commit.format": "auto", // Commit message format: auto (default) / see format details below
     "gcmp.commit.customInstructions": "", // Custom instructions (only effective when format=custom)
-    "gcmp.commit.sensitiveFiles": [
-        "*.pem",
-        "**/.env.local",
-        "secrets/**"
-    ], // Extra sensitive file path patterns excluded from diff analysis
+    "gcmp.commit.sensitiveFiles": ["*.pem", "**/.env.local", "secrets/**"], // Extra sensitive file path patterns excluded from diff analysis
     "gcmp.commit.model": {
         "provider": "zhipu", // Model provider (providerKey, e.g., zhipu / minimax / compatible)
         "model": "glm-4.6" // Model ID (corresponding to VS Code Language Model's model.id)

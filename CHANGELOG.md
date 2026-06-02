@@ -2,6 +2,76 @@
 
 本文档记录了 GCMP (AI Chat Models) 扩展的最近主要更改。
 
+## [0.23.3] - 2026-06-02
+
+### 优化
+
+- **智能模型过滤**：提供商模型列表现在会根据已配置的 API Key 过滤，用户仅能看到密钥已配置的可用模型，减少干扰项（影响：百度千帆、阿里云百炼、MiniMax、Moonshot、腾讯云、火山引擎、小米 MiMo）
+- **OpenCode 会话标识**：为 OpenCode 提供商添加会话级跟踪标识头（`x-opencode-session`、`x-opencode-request`、`x-opencode-project`），提升可观测性
+
+---
+
+### Improved
+
+- **Smart model filtering**: Provider model lists now filter based on configured API keys — users only see models they can actually use, reducing clutter (affected: Baidu Qianfan, DashScope, MiniMax, Moonshot, Tencent, Volcengine, Xiaomi MiMo)
+- **OpenCode session identification**: Added session-level tracing headers (`x-opencode-session`, `x-opencode-request`, `x-opencode-project`) for OpenCode provider, improving observability
+
+## [0.23.2] - 2026-06-01
+
+### 新增
+
+- **OpenCode 新提供商**：新增 `gcmp.opencode` 提供商，支持 [OpenCode](https://opencode.ai/) 平台的 **Go 订阅**与 **Zen 按量付费**，覆盖 **GLM-5.1**、**Kimi-K2.6**、**DeepSeek-V4-Pro**、**MiniMax-M3** 等 20+ 模型
+- **`thinkingFormat` 新增 `object-none` 模式**：支持 `object-none` 格式，仅当 `reasoningEffort` 为 `none` 时传递 `{ thinking: { type: 'disabled' } }`，适用于 DeepSeek 等特殊推理参数模型
+
+---
+
+### Added
+
+- **New OpenCode provider**: Added `gcmp.opencode` provider supporting [OpenCode](https://opencode.ai/) **Go subscription** and **Zen pay-as-you-go**, covering 20+ models including **GLM-5.1**, **Kimi-K2.6**, **DeepSeek-V4-Pro**, **MiniMax-M3**
+- **`thinkingFormat` adds `object-none` mode**: Only passes `{ thinking: { type: 'disabled' } }` when `reasoningEffort` is `none`, suitable for DeepSeek and similar models
+
+## [0.23.1] - 2026-06-01
+
+### 新增
+
+- **MiniMax-M3 Token Plan 模型**：新增 MiniMax-M3 — 原生多模态、1M 上下文，最大输出 128K
+- **MiniMax-M3 PayGo 模型**：使用标准密钥即可访问
+- **MiniMax Key 自动迁移**：旧 `minimax-coding` → 新 `minimax-token`，无缝过渡
+
+### 更新
+
+- **Coding Plan → Token Plan 重命名**：命令名、配置项、状态栏、向导、代码注释等全量更新
+- **图片桥接优化**：仅 M2 系列启用，M3+ 原生多模态无需桥接
+- **状态栏改造**：百分比显示剩余量，API 端点更新为 `token_plan/remains`
+
+---
+
+### Added
+
+- **MiniMax-M3 Token Plan model**: Natively multimodal, 1M context, max output 128K
+- **MiniMax-M3 PayGo model**: Accessible with standard API key
+- **Auto key migration**: Old `minimax-coding` → new `minimax-token`, seamless transition
+
+### Updated
+
+- **Coding Plan → Token Plan rebranding**: Commands, config, status bar, wizard, code comments
+- **Image bridge optimization**: M2-series only; M3+ native multimodal
+- **Status bar overhaul**: Percentage display, endpoint updated to `token_plan/remains`
+
+## [0.23.0] - 2026-05-30
+
+### 新增
+
+- **Grok Build CLI (OAuth) 接入**：[#200](https://github.com/VicBilibily/GCMP/pull/200) 新增 `gcmp.grok` 提供商，支持通过 Grok Build OAuth 登录态访问 xAI 编程模型
+- **Grok Build 0.1 模型**：新增 **grok-build-0.1** 模型（基于 `openai-responses` SDK 模式），支持工具调用与图片输入，最大输入 256K / 最大输出 131K
+
+---
+
+### Added
+
+- **Grok Build CLI (OAuth) integration**: Added `gcmp.grok` provider supporting xAI programming models via Grok Build OAuth login ([#200](https://github.com/VicBilibily/GCMP/pull/200))
+- **Grok Build 0.1 model**: Added **grok-build-0.1** model (via `openai-responses` SDK mode) with tool calling and image input support; max input 256K / max output 131K
+
 ## [0.22.27] - 2026-05-30
 
 ### 新增
