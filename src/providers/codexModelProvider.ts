@@ -116,6 +116,15 @@ export class CodexModelProvider extends CliModelProvider {
         }
 
         const accountId = await CliAuthFactory.getCodexAccountId();
+        if (!accountId) {
+            throw new Error('ChatGPT account ID is unavailable; run Codex CLI login again');
+        }
+
+        const modelsUrl = new URL(CODEX_MODELS_URL);
+        const clientVersion = this.providerConfig.customHeader?.version;
+        if (clientVersion) {
+            modelsUrl.searchParams.set('client_version', clientVersion);
+        }
         const controller = new AbortController();
         const cancellation = token.onCancellationRequested(() => controller.abort());
         try {
@@ -124,12 +133,10 @@ export class CodexModelProvider extends CliModelProvider {
                 ...this.providerConfig.customHeader,
                 Authorization: `Bearer ${accessToken}`
             };
-            if (accountId) {
-                headers['chatgpt-account-id'] = accountId;
-            }
+            headers['chatgpt-account-id'] = accountId;
 
             const response = await ConfigManager.fetchWithProxy(
-                CODEX_MODELS_URL,
+                modelsUrl,
                 { method: 'GET', headers, signal: controller.signal },
                 { providerKey: 'codex' }
             );
