@@ -1,46 +1,373 @@
 {
-    "name": "gcmp",
-    "publisher": "vicanent",
-    "displayName": "AI Chat Models",
-    "description": "%extension.description%",
-    "version": "0.25.30",
-    "license": "MIT",
-    "keywords": [
-        "ai",
-        "chat",
-        "copilot",
-        "github-copilot",
-        "language-model",
-        "zhipu",
-        "kimi",
-        "volcengine",
-        "minimax",
-        "moonshot",
-        "deepseek",
-        "streamlake",
-        "dashscope",
-        "tencent",
-        "Xiaomi MiMo",
-        "baidu",
-        "qianfan",
-        "antling",
-        "ant-ling",
-        "stepfun",
-        "LongCat",
-        "OpenAI Compatible",
-        "Anthropic Compatible",
-        "智谱AI",
-        "火山方舟",
-        "月之暗面",
-        "深度求索",
-        "快手万擎",
-        "阿里云百炼",
-        "腾讯云",
-        "百度千帆",
-        "阶跃星辰",
-        "百灵",
-        "蚂蚁百灵",
-        "Coding Plan 编程套餐"
+  "name": "gcmp",
+  "publisher": "vicanent",
+  "displayName": "AI Chat Models",
+  "description": "%extension.description%",
+  "version": "0.25.30",
+  "license": "MIT",
+  "keywords": [
+    "ai",
+    "chat",
+    "copilot",
+    "github-copilot",
+    "language-model",
+    "zhipu",
+    "kimi",
+    "volcengine",
+    "minimax",
+    "moonshot",
+    "deepseek",
+    "streamlake",
+    "dashscope",
+    "tencent",
+    "Xiaomi MiMo",
+    "baidu",
+    "qianfan",
+    "antling",
+    "ant-ling",
+    "stepfun",
+    "LongCat",
+    "OpenAI Compatible",
+    "Anthropic Compatible",
+    "智谱AI",
+    "火山方舟",
+    "月之暗面",
+    "深度求索",
+    "快手万擎",
+    "阿里云百炼",
+    "腾讯云",
+    "百度千帆",
+    "阶跃星辰",
+    "百灵",
+    "蚂蚁百灵",
+    "Coding Plan 编程套餐"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VicBilibily/GCMP.git"
+  },
+  "engines": {
+    "vscode": ">=1.125.0",
+    "node": ">=22.22.3",
+    "npm": ">=10.8.2"
+  },
+  "enabledApiProposals": ["chatProvider"],
+  "extensionDependencies": ["github.copilot-chat"],
+  "categories": ["AI", "Chat"],
+  "icon": "./gcmp-logo.png",
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished",
+    "onLanguageModelProvider:gcmp.zhipu",
+    "onLanguageModelProvider:gcmp.minimax",
+    "onLanguageModelProvider:gcmp.moonshot",
+    "onLanguageModelProvider:gcmp.deepseek",
+    "onLanguageModelProvider:gcmp.dashscope",
+    "onLanguageModelProvider:gcmp.streamlake",
+    "onLanguageModelProvider:gcmp.volcengine",
+    "onLanguageModelProvider:gcmp.tencent",
+    "onLanguageModelProvider:gcmp.xiaomimimo",
+    "onLanguageModelProvider:gcmp.baidu",
+    "onLanguageModelProvider:gcmp.stepfun",
+    "onLanguageModelProvider:gcmp.antling",
+    "onLanguageModelProvider:gcmp.xfyun",
+    "onLanguageModelProvider:gcmp.longcat",
+    "onLanguageModelProvider:gcmp.codex",
+    "onLanguageModelProvider:gcmp.grok",
+    "onLanguageModelProvider:gcmp.opencode",
+    "onLanguageModelProvider:gcmp.hyper",
+    "onLanguageModelProvider:gcmp.clinepass",
+    "onLanguageModelProvider:gcmp.compatible",
+    "onLanguageModelTool:gcmp_zhipuWebSearch",
+    "onLanguageModelTool:gcmp_minimaxWebSearch",
+    "onLanguageModelTool:gcmp_kimiWebSearch",
+    "onLanguageModelTool:gcmp_dashscopeWebSearch",
+    "onLanguageModelTool:gcmp_stepfunWebSearch",
+    "onLanguageModelTool:gcmp_visionTool_uiToArtifact",
+    "onLanguageModelTool:gcmp_visionTool_extractTextFromScreenshot",
+    "onLanguageModelTool:gcmp_visionTool_diagnoseErrorScreenshot",
+    "onLanguageModelTool:gcmp_visionTool_understandTechnicalDiagram",
+    "onLanguageModelTool:gcmp_visionTool_analyzeDataVisualization",
+    "onLanguageModelTool:gcmp_visionTool_uiDiffCheck",
+    "onLanguageModelTool:gcmp_visionTool_analyzeImage",
+    "onFileSystem:gcmp-settings"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "gcmp.zhipu.setApiKey",
+        "title": "%command.zhipu.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.zhipu.configWizard",
+        "title": "%command.zhipu.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.minimax.setApiKey",
+        "title": "%command.minimax.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.minimax.setTokenPlanApiKey",
+        "title": "%command.minimax.setTokenPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.minimax.setTokenPlanEndpoint",
+        "title": "%command.minimax.setTokenPlanEndpoint%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.minimax.configWizard",
+        "title": "%command.minimax.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.kimi.setApiKey",
+        "title": "%command.kimi.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.moonshot.setApiKey",
+        "title": "%command.moonshot.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.moonshot.configWizard",
+        "title": "%command.moonshot.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.deepseek.setApiKey",
+        "title": "%command.deepseek.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.volcengine.setApiKey",
+        "title": "%command.volcengine.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.volcengine.setAgentPlanApiKey",
+        "title": "%command.volcengine.setAgentPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.volcengine.configWizard",
+        "title": "%command.volcengine.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.streamlake.setApiKey",
+        "title": "%command.streamlake.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.dashscope.setApiKey",
+        "title": "%command.dashscope.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.dashscope.setCodingPlanApiKey",
+        "title": "%command.dashscope.setCodingPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.dashscope.setTokenPlanApiKey",
+        "title": "%command.dashscope.setTokenPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.dashscope.configWizard",
+        "title": "%command.dashscope.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.tencent.setApiKey",
+        "title": "%command.tencent.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.tencent.setCodingPlanApiKey",
+        "title": "%command.tencent.setCodingPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.tencent.setTokenPlanApiKey",
+        "title": "%command.tencent.setTokenPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.tencent.setDeepSeekApiKey",
+        "title": "%command.tencent.setDeepSeekApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.tencent.setTokenHubApiKey",
+        "title": "%command.tencent.setTokenHubApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.tencent.configWizard",
+        "title": "%command.tencent.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.xiaomimimo.setApiKey",
+        "title": "%command.xiaomimimo.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.xiaomimimo.setTokenPlanApiKey",
+        "title": "%command.xiaomimimo.setTokenPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.xiaomimimo.setTokenPlanEndpoint",
+        "title": "%command.xiaomimimo.setTokenPlanEndpoint%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.xiaomimimo.configWizard",
+        "title": "%command.xiaomimimo.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.baidu.setApiKey",
+        "title": "%command.baidu.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.baidu.setCodingPlanApiKey",
+        "title": "%command.baidu.setCodingPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.baidu.configWizard",
+        "title": "%command.baidu.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.stepfun.setApiKey",
+        "title": "%command.stepfun.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.stepfun.configWizard",
+        "title": "%command.stepfun.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.antling.setApiKey",
+        "title": "%command.antling.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.xfyun.setCodingPlanApiKey",
+        "title": "%command.xfyun.setCodingPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.xfyun.setTokenPlanApiKey",
+        "title": "%command.xfyun.setTokenPlanApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.xfyun.configWizard",
+        "title": "%command.xfyun.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.longcat.setApiKey",
+        "title": "%command.longcat.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.opencode.setApiKey",
+        "title": "%command.opencode.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.hyper.setApiKey",
+        "title": "%command.hyper.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.clinepass.setApiKey",
+        "title": "%command.clinepass.setApiKey%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.codex.configWizard",
+        "title": "%command.codex.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.grok.configWizard",
+        "title": "%command.grok.configWizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.compatible.manageModels",
+        "title": "%command.compatible.manageModels%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.nesCompletion.toggleManual",
+        "title": "%command.nesCompletion.toggleManual%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.tokenUsage.showDetails",
+        "title": "%command.tokenUsage.showDetails%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.cli.auth",
+        "title": "%command.cli.auth%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.commit.generateMessage",
+        "title": "%command.commit.generateMessage%",
+        "category": "GCMP",
+        "icon": "$(gcmp-git-commit)"
+      },
+      {
+        "command": "gcmp.commit.generateMessageStaged",
+        "title": "%command.commit.generateMessageStaged%",
+        "category": "GCMP",
+        "icon": "$(gcmp-git-commit)"
+      },
+      {
+        "command": "gcmp.commit.generateMessageWorkingTree",
+        "title": "%command.commit.generateMessageWorkingTree%",
+        "category": "GCMP",
+        "icon": "$(gcmp-git-commit)"
+      },
+      {
+        "command": "gcmp.commit.selectModel",
+        "title": "%command.commit.selectModel%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.vision.selectModel",
+        "title": "%command.vision.selectModel%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.modelSettings.wizard",
+        "title": "%command.modelSettings.wizard%",
+        "category": "GCMP"
+      },
+      {
+        "command": "gcmp.sync.configure",
+        "title": "%command.sync.configure%",
+        "category": "GCMP",
+        "description": "%command.sync.configure.description%"
+      }
     ],
     "configuration": {
       "title": "GCMP - AI Chat Models",
@@ -62,436 +389,194 @@
             {
               "pattern": "^(?:(?:[^:@/\\s]+(?::[^@/\\s]*)?@)?(?:\\[[0-9A-Fa-f:.]+\\]|[^:/\\s?#]+)(?::\\d{1,5})?)$"
             }
-        ],
-        "configuration": {
-            "title": "GCMP - AI Chat Models",
-            "properties": {
-                "gcmp.proxy": {
-                    "type": "string",
-                    "default": "",
-                    "description": "%setting.proxy.description%",
-                    "anyOf": [
-                        {
-                            "const": ""
-                        },
-                        {
-                            "const": "noproxy"
-                        },
-                        {
-                            "format": "uri"
-                        },
-                        {
-                            "pattern": "^(?:(?:[^:@/\\s]+(?::[^@/\\s]*)?@)?(?:\\[[0-9A-Fa-f:.]+\\]|[^:/\\s?#]+)(?::\\d{1,5})?)$"
-                        }
-                    ],
-                    "scope": "machine"
-                },
-                "gcmp.tls.useSystemCertificates": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%setting.tls.useSystemCertificates.description%",
-                    "scope": "application"
-                },
-                "gcmp.maxTokens": {
-                    "type": "number",
-                    "default": 32000,
-                    "minimum": 32,
-                    "maximum": 256000,
-                    "description": "%setting.maxTokens.description%",
-                    "deprecationMessage": "%setting.maxTokens.deprecation%",
-                    "scope": "application"
-                },
-                "gcmp.retry.enabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%setting.retry.enabled.description%",
-                    "scope": "application"
-                },
-                "gcmp.retry.maxAttempts": {
-                    "type": "number",
-                    "default": 3,
-                    "minimum": 1,
-                    "maximum": 5,
-                    "description": "%setting.retry.maxAttempts.description%",
-                    "scope": "application"
-                },
-                "gcmp.temperature": {
-                    "type": "number",
-                    "deprecationMessage": "%setting.temperature.deprecationMessage%",
-                    "description": "%setting.temperature.description%",
-                    "scope": "application"
-                },
-                "gcmp.topP": {
-                    "type": "number",
-                    "deprecationMessage": "%setting.topP.deprecationMessage%",
-                    "description": "%setting.topP.description%",
-                    "scope": "application"
-                },
-                "gcmp.rememberLastModel": {
-                    "type": "boolean",
-                    "deprecationMessage": "%setting.rememberLastModel.deprecationMessage%",
-                    "description": "%setting.rememberLastModel.description%",
-                    "scope": "application"
-                },
-                "gcmp.editToolMode": {
-                    "type": "string",
-                    "enum": [
-                        "claude",
-                        "gpt-5",
-                        "none"
-                    ],
-                    "enumDescriptions": [
-                        "%setting.editToolMode.enumDescriptions.claude%",
-                        "%setting.editToolMode.enumDescriptions.gpt5%",
-                        "%setting.editToolMode.enumDescriptions.none%"
-                    ],
-                    "default": "claude",
-                    "deprecationMessage": "%setting.editToolMode.deprecationMessage%",
-                    "description": "%setting.editToolMode.description%",
-                    "scope": "application"
-                },
-                "gcmp.autoPrefixModelId": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%setting.autoPrefixModelId.description%",
-                    "scope": "application",
-                    "deprecationMessage": "%setting.autoPrefixModelId.deprecationMessage%"
-                },
-                "gcmp.zhipu.search.enableMCP": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%setting.zhipu.search.enableMCP.description%",
-                    "scope": "application"
-                },
-                "gcmp.zhipu.endpoint": {
-                    "type": "string",
-                    "enum": [
-                        "open.bigmodel.cn",
-                        "api.z.ai"
-                    ],
-                    "default": "open.bigmodel.cn",
-                    "description": "%setting.zhipu.endpoint.description%",
-                    "scope": "application"
-                },
-                "gcmp.stepfun.search.enableMCP": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%setting.stepfun.search.enableMCP.description%",
-                    "scope": "application"
-                },
-                "gcmp.minimax.endpoint": {
-                    "type": "string",
-                    "enum": [
-                        "minimaxi.com",
-                        "minimax.io"
-                    ],
-                    "default": "minimaxi.com",
-                    "description": "%setting.minimax.endpoint.description%",
-                    "scope": "application"
-                },
-                "gcmp.xiaomimimo.endpoint": {
-                    "type": "string",
-                    "enum": [
-                        "cn",
-                        "sgp",
-                        "ams"
-                    ],
-                    "default": "cn",
-                    "description": "%setting.xiaomimimo.endpoint.description%",
-                    "scope": "application"
-                },
-                "gcmp.usages.retentionDays": {
-                    "type": "number",
-                    "default": 100,
-                    "minimum": 0,
-                    "maximum": 365,
-                    "description": "%setting.usages.retentionDays.description%",
-                    "scope": "application"
-                },
-                "gcmp.fimCompletion.enabled": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "%setting.fimCompletion.enabled.description%",
-                    "scope": "application"
-                },
-                "gcmp.fimCompletion.debounceMs": {
-                    "type": "number",
-                    "default": 500,
-                    "minimum": 50,
-                    "maximum": 1000,
-                    "description": "%setting.fimCompletion.debounceMs.description%",
-                    "scope": "application"
-                },
-                "gcmp.fimCompletion.timeoutMs": {
-                    "type": "number",
-                    "default": 5000,
-                    "minimum": 1000,
-                    "maximum": 30000,
-                    "description": "%setting.fimCompletion.timeoutMs.description%",
-                    "scope": "application"
-                },
-                "gcmp.fimCompletion.circuitBreaker": {
-                    "type": "object",
-                    "default": {
-                        "enabled": true,
-                        "failureThreshold": 10,
-                        "cooldownSeconds": 30
-                    },
-                    "description": "%setting.fimCompletion.circuitBreaker.description%",
-                    "scope": "application",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean",
-                            "description": "%setting.fimCompletion.circuitBreaker.enabled.description%"
-                        },
-                        "failureThreshold": {
-                            "type": "number",
-                            "default": 10,
-                            "minimum": 2,
-                            "maximum": 60,
-                            "description": "%setting.fimCompletion.circuitBreaker.failureThreshold.description%"
-                        },
-                        "cooldownSeconds": {
-                            "type": "number",
-                            "default": 30,
-                            "minimum": 10,
-                            "maximum": 300,
-                            "description": "%setting.fimCompletion.circuitBreaker.cooldownSeconds.description%"
-                        }
-                    }
-                },
-                "gcmp.fimCompletion.modelConfig": {
-                    "type": "object",
-                    "default": {
-                        "provider": "",
-                        "baseUrl": "",
-                        "model": ""
-                    },
-                    "description": "%setting.fimCompletion.modelConfig.description%",
-                    "scope": "application",
-                    "properties": {
-                        "provider": {
-                            "type": "string",
-                            "description": "%setting.modelConfig.provider.description%"
-                        },
-                        "baseUrl": {
-                            "type": "string",
-                            "description": "%setting.modelConfig.baseUrl.description%",
-                            "format": "uri"
-                        },
-                        "proxy": {
-                            "type": "string",
-                            "description": "%setting.modelConfig.proxy.description%",
-                            "anyOf": [
-                                {
-                                    "const": ""
-                                },
-                                {
-                                    "const": "noproxy"
-                                },
-                                {
-                                    "format": "uri"
-                                },
-                                {
-                                    "pattern": "^(?:(?:[^:@/\\s]+(?::[^@/\\s]*)?@)?(?:\\[[0-9A-Fa-f:.]+\\]|[^:/\\s?#]+)(?::\\d{1,5})?)$"
-                                }
-                            ]
-                        },
-                        "model": {
-                            "type": "string",
-                            "description": "%setting.fimCompletion.modelConfig.model.description%"
-                        },
-                        "maxTokens": {
-                            "type": "number",
-                            "description": "%setting.fimCompletion.modelConfig.maxTokens.description%",
-                            "default": 200,
-                            "minimum": 50,
-                            "maximum": 16000
-                        },
-                        "extraBody": {
-                            "type": "object",
-                            "description": "%setting.modelConfig.extraBody.description%",
-                            "additionalProperties": {
-                                "description": "%setting.modelConfig.extraBody.additionalProperties.description%"
-                            }
-                        }
-                    },
-                    "required": [
-                        "provider",
-                        "baseUrl",
-                        "model"
-                    ]
-                },
-                "gcmp.nesCompletion.enabled": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "%setting.nesCompletion.enabled.description%",
-                    "scope": "application"
-                },
-                "gcmp.nesCompletion.debounceMs": {
-                    "type": "number",
-                    "default": 500,
-                    "minimum": 50,
-                    "maximum": 1000,
-                    "description": "%setting.nesCompletion.debounceMs.description%",
-                    "scope": "application"
-                },
-                "gcmp.nesCompletion.timeoutMs": {
-                    "type": "number",
-                    "default": 5000,
-                    "minimum": 1000,
-                    "maximum": 30000,
-                    "description": "%setting.nesCompletion.timeoutMs.description%",
-                    "scope": "application"
-                },
-                "gcmp.nesCompletion.manualOnly": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "%setting.nesCompletion.manualOnly.description%",
-                    "scope": "application"
-                },
-                "gcmp.nesCompletion.circuitBreaker": {
-                    "type": "object",
-                    "default": {
-                        "enabled": true,
-                        "failureThreshold": 5,
-                        "cooldownSeconds": 30
-                    },
-                    "description": "%setting.nesCompletion.circuitBreaker.description%",
-                    "scope": "application",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean",
-                            "description": "%setting.nesCompletion.circuitBreaker.enabled.description%"
-                        },
-                        "failureThreshold": {
-                            "type": "number",
-                            "default": 5,
-                            "minimum": 2,
-                            "maximum": 20,
-                            "description": "%setting.nesCompletion.circuitBreaker.failureThreshold.description%"
-                        },
-                        "cooldownSeconds": {
-                            "type": "number",
-                            "default": 30,
-                            "minimum": 10,
-                            "maximum": 300,
-                            "description": "%setting.nesCompletion.circuitBreaker.cooldownSeconds.description%"
-                        }
-                    }
-                },
-                "gcmp.nesCompletion.modelConfig": {
-                    "type": "object",
-                    "default": {
-                        "provider": "",
-                        "baseUrl": "",
-                        "model": ""
-                    },
-                    "description": "%setting.nesCompletion.modelConfig.description%",
-                    "scope": "application",
-                    "properties": {
-                        "provider": {
-                            "type": "string",
-                            "description": "%setting.modelConfig.provider.description%"
-                        },
-                        "baseUrl": {
-                            "type": "string",
-                            "description": "%setting.modelConfig.baseUrl.description%",
-                            "format": "uri"
-                        },
-                        "proxy": {
-                            "type": "string",
-                            "description": "%setting.modelConfig.proxy.description%",
-                            "anyOf": [
-                                {
-                                    "const": ""
-                                },
-                                {
-                                    "const": "noproxy"
-                                },
-                                {
-                                    "format": "uri"
-                                },
-                                {
-                                    "pattern": "^(?:(?:[^:@/\\s]+(?::[^@/\\s]*)?@)?(?:\\[[0-9A-Fa-f:.]+\\]|[^:/\\s?#]+)(?::\\d{1,5})?)$"
-                                }
-                            ]
-                        },
-                        "model": {
-                            "type": "string",
-                            "description": "%setting.nesCompletion.modelConfig.model.description%"
-                        },
-                        "maxTokens": {
-                            "type": "number",
-                            "description": "%setting.nesCompletion.modelConfig.maxTokens.description%",
-                            "default": 200,
-                            "minimum": 50,
-                            "maximum": 16000
-                        },
-                        "extraBody": {
-                            "type": "object",
-                            "description": "%setting.modelConfig.extraBody.description%",
-                            "additionalProperties": {
-                                "description": "%setting.modelConfig.extraBody.additionalProperties.description%"
-                            }
-                        }
-                    },
-                    "required": [
-                        "provider",
-                        "baseUrl",
-                        "model"
-                    ]
-                },
-                "gcmp.commit.enabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "%setting.commit.enabled.description%"
-                },
-                "gcmp.commit.language": {
-                    "type": "string",
-                    "enum": [
-                        "chinese",
-                        "english"
-                    ],
-                    "enumDescriptions": [
-                        "%setting.commit.language.enumDescriptions.chinese%",
-                        "%setting.commit.language.enumDescriptions.english%"
-                    ],
-                    "default": "chinese",
-                    "description": "%setting.commit.language.description%",
-                    "scope": "window"
-                },
-                "gcmp.commit.format": {
-                    "type": "string",
-                    "enum": [
-                        "auto",
-                        "plain",
-                        "custom",
-                        "conventional",
-                        "angular",
-                        "karma",
-                        "semantic",
-                        "emoji",
-                        "emojiKarma",
-                        "google",
-                        "atom"
-                    ],
-                    "enumDescriptions": [
-                        "%setting.commit.format.enumDescriptions.auto%",
-                        "%setting.commit.format.enumDescriptions.plain%",
-                        "%setting.commit.format.enumDescriptions.custom%",
-                        "%setting.commit.format.enumDescriptions.conventional%",
-                        "%setting.commit.format.enumDescriptions.angular%",
-                        "%setting.commit.format.enumDescriptions.karma%",
-                        "%setting.commit.format.enumDescriptions.semantic%",
-                        "%setting.commit.format.enumDescriptions.emoji%",
-                        "%setting.commit.format.enumDescriptions.emojiKarma%",
-                        "%setting.commit.format.enumDescriptions.google%",
-                        "%setting.commit.format.enumDescriptions.atom%"
-                    ],
-                    "default": "auto",
-                    "description": "%setting.commit.format.description%",
-                    "scope": "window"
+          ],
+          "scope": "machine"
+        },
+        "gcmp.tls.useSystemCertificates": {
+          "type": "boolean",
+          "default": true,
+          "description": "%setting.tls.useSystemCertificates.description%",
+          "scope": "application"
+        },
+        "gcmp.maxTokens": {
+          "type": "number",
+          "default": 32000,
+          "minimum": 32,
+          "maximum": 256000,
+          "description": "%setting.maxTokens.description%",
+          "deprecationMessage": "%setting.maxTokens.deprecation%",
+          "scope": "application"
+        },
+        "gcmp.retry.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "%setting.retry.enabled.description%",
+          "scope": "application"
+        },
+        "gcmp.retry.maxAttempts": {
+          "type": "number",
+          "default": 3,
+          "minimum": 1,
+          "maximum": 5,
+          "description": "%setting.retry.maxAttempts.description%",
+          "scope": "application"
+        },
+        "gcmp.temperature": {
+          "type": "number",
+          "deprecationMessage": "%setting.temperature.deprecationMessage%",
+          "description": "%setting.temperature.description%",
+          "scope": "application"
+        },
+        "gcmp.topP": {
+          "type": "number",
+          "deprecationMessage": "%setting.topP.deprecationMessage%",
+          "description": "%setting.topP.description%",
+          "scope": "application"
+        },
+        "gcmp.rememberLastModel": {
+          "type": "boolean",
+          "deprecationMessage": "%setting.rememberLastModel.deprecationMessage%",
+          "description": "%setting.rememberLastModel.description%",
+          "scope": "application"
+        },
+        "gcmp.editToolMode": {
+          "type": "string",
+          "enum": ["claude", "gpt-5", "none"],
+          "enumDescriptions": [
+            "%setting.editToolMode.enumDescriptions.claude%",
+            "%setting.editToolMode.enumDescriptions.gpt5%",
+            "%setting.editToolMode.enumDescriptions.none%"
+          ],
+          "default": "claude",
+          "deprecationMessage": "%setting.editToolMode.deprecationMessage%",
+          "description": "%setting.editToolMode.description%",
+          "scope": "application"
+        },
+        "gcmp.autoPrefixModelId": {
+          "type": "boolean",
+          "default": true,
+          "description": "%setting.autoPrefixModelId.description%",
+          "scope": "application",
+          "deprecationMessage": "%setting.autoPrefixModelId.deprecationMessage%"
+        },
+        "gcmp.zhipu.search.enableMCP": {
+          "type": "boolean",
+          "default": true,
+          "description": "%setting.zhipu.search.enableMCP.description%",
+          "scope": "application"
+        },
+        "gcmp.zhipu.endpoint": {
+          "type": "string",
+          "enum": ["open.bigmodel.cn", "api.z.ai"],
+          "default": "open.bigmodel.cn",
+          "description": "%setting.zhipu.endpoint.description%",
+          "scope": "application"
+        },
+        "gcmp.stepfun.search.enableMCP": {
+          "type": "boolean",
+          "default": true,
+          "description": "%setting.stepfun.search.enableMCP.description%",
+          "scope": "application"
+        },
+        "gcmp.minimax.endpoint": {
+          "type": "string",
+          "enum": ["minimaxi.com", "minimax.io"],
+          "default": "minimaxi.com",
+          "description": "%setting.minimax.endpoint.description%",
+          "scope": "application"
+        },
+        "gcmp.xiaomimimo.endpoint": {
+          "type": "string",
+          "enum": ["cn", "sgp", "ams"],
+          "default": "cn",
+          "description": "%setting.xiaomimimo.endpoint.description%",
+          "scope": "application"
+        },
+        "gcmp.usages.retentionDays": {
+          "type": "number",
+          "default": 100,
+          "minimum": 0,
+          "maximum": 365,
+          "description": "%setting.usages.retentionDays.description%",
+          "scope": "application"
+        },
+        "gcmp.fimCompletion.enabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "%setting.fimCompletion.enabled.description%",
+          "scope": "application"
+        },
+        "gcmp.fimCompletion.debounceMs": {
+          "type": "number",
+          "default": 500,
+          "minimum": 50,
+          "maximum": 1000,
+          "description": "%setting.fimCompletion.debounceMs.description%",
+          "scope": "application"
+        },
+        "gcmp.fimCompletion.timeoutMs": {
+          "type": "number",
+          "default": 5000,
+          "minimum": 1000,
+          "maximum": 30000,
+          "description": "%setting.fimCompletion.timeoutMs.description%",
+          "scope": "application"
+        },
+        "gcmp.fimCompletion.circuitBreaker": {
+          "type": "object",
+          "default": {
+            "enabled": true,
+            "failureThreshold": 10,
+            "cooldownSeconds": 30
+          },
+          "description": "%setting.fimCompletion.circuitBreaker.description%",
+          "scope": "application",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "%setting.fimCompletion.circuitBreaker.enabled.description%"
+            },
+            "failureThreshold": {
+              "type": "number",
+              "default": 10,
+              "minimum": 2,
+              "maximum": 60,
+              "description": "%setting.fimCompletion.circuitBreaker.failureThreshold.description%"
+            },
+            "cooldownSeconds": {
+              "type": "number",
+              "default": 30,
+              "minimum": 10,
+              "maximum": 300,
+              "description": "%setting.fimCompletion.circuitBreaker.cooldownSeconds.description%"
+            }
+          }
+        },
+        "gcmp.fimCompletion.modelConfig": {
+          "type": "object",
+          "default": {
+            "provider": "",
+            "baseUrl": "",
+            "model": ""
+          },
+          "description": "%setting.fimCompletion.modelConfig.description%",
+          "scope": "application",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "description": "%setting.modelConfig.provider.description%"
+            },
+            "baseUrl": {
+              "type": "string",
+              "description": "%setting.modelConfig.baseUrl.description%",
+              "format": "uri"
+            },
+            "proxy": {
+              "type": "string",
+              "description": "%setting.modelConfig.proxy.description%",
+              "anyOf": [
+                {
+                  "const": ""
                 },
                 {
                   "const": "noproxy"
@@ -552,6 +637,36 @@
           "default": false,
           "description": "%setting.nesCompletion.manualOnly.description%",
           "scope": "application"
+        },
+        "gcmp.nesCompletion.circuitBreaker": {
+          "type": "object",
+          "default": {
+            "enabled": true,
+            "failureThreshold": 5,
+            "cooldownSeconds": 30
+          },
+          "description": "%setting.nesCompletion.circuitBreaker.description%",
+          "scope": "application",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "%setting.nesCompletion.circuitBreaker.enabled.description%"
+            },
+            "failureThreshold": {
+              "type": "number",
+              "default": 5,
+              "minimum": 2,
+              "maximum": 20,
+              "description": "%setting.nesCompletion.circuitBreaker.failureThreshold.description%"
+            },
+            "cooldownSeconds": {
+              "type": "number",
+              "default": 30,
+              "minimum": 10,
+              "maximum": 300,
+              "description": "%setting.nesCompletion.circuitBreaker.cooldownSeconds.description%"
+            }
+          }
         },
         "gcmp.nesCompletion.modelConfig": {
           "type": "object",

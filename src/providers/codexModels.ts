@@ -90,7 +90,41 @@ function parseRemoteModel(value: unknown): CodexRemoteModel | undefined {
     };
 }
 
+function getConfiguredReasoningEffort(model: ModelConfig): ModelConfig['reasoningDefault'] {
+    return nonEmptyString(asRecord(model.extraBody?.reasoning)?.effort) as ModelConfig['reasoningDefault'];
+}
+
+function resolveReasoningDefault(
+    efforts: NonNullable<ModelConfig['reasoningEffort']>,
+    ...candidates: Array<ModelConfig['reasoningDefault']>
+): ModelConfig['reasoningDefault'] {
+    for (const candidate of candidates) {
+        if (candidate && efforts.includes(candidate)) {
+            return candidate;
+        }
+    }
+    return efforts.includes('medium') ? 'medium' : efforts[0];
+}
+
+function withReasoningEffort(
+    extraBody: ModelConfig['extraBody'],
+    effort: ModelConfig['reasoningDefault']
+): ModelConfig['extraBody'] {
+    if (!effort) {
+        return extraBody;
+    }
+
+    return {
+        ...extraBody,
+        reasoning: {
+            ...asRecord(extraBody?.reasoning),
+            effort
+        }
+    };
+}
+
 function createDefaultModel(remote: CodexRemoteModel): ModelConfig {
+    const reasoningDefault = resolveReasoningDefault(remote.reasoningEffort, remote.reasoningDefault);
     return {
         id: remote.slug,
         name: `${remote.displayName ?? remote.slug} (ChatGPT)`,
@@ -100,7 +134,7 @@ function createDefaultModel(remote: CodexRemoteModel): ModelConfig {
         maxOutputTokens: 128000,
         useInstructions: true,
         reasoningEffort: remote.reasoningEffort.length > 0 ? remote.reasoningEffort : undefined,
-        reasoningDefault: remote.reasoningDefault,
+        reasoningDefault,
         serviceTier: remote.serviceTier,
         capabilities: {
             toolCalling: true,
@@ -110,7 +144,7 @@ function createDefaultModel(remote: CodexRemoteModel): ModelConfig {
             store: false,
             tool_choice: 'auto',
             reasoning: {
-                effort: remote.reasoningDefault ?? 'medium',
+                effort: reasoningDefault ?? 'medium',
                 summary: 'auto'
             }
         }
@@ -138,6 +172,17 @@ export function parseCodexModelsResponse(payload: unknown, staticModels: ModelCo
         })
         .map(({ model: remote }) => {
             const base = staticById.get(remote.slug) ?? createDefaultModel(remote);
+            const reasoningEffort =
+                remote.reasoningEffort.length > 0 ? remote.reasoningEffort : base.reasoningEffort;
+            const reasoningDefault =
+                reasoningEffort && reasoningEffort.length > 0 ?
+                    resolveReasoningDefault(
+                        reasoningEffort,
+                        remote.reasoningDefault,
+                        base.reasoningDefault,
+                        getConfiguredReasoningEffort(base)
+                    )
+                :   undefined;
             return {
                 ...base,
                 id: remote.slug,
@@ -148,9 +193,10 @@ export function parseCodexModelsResponse(payload: unknown, staticModels: ModelCo
                     ...base.capabilities,
                     imageInput: remote.inputModalities.includes('image')
                 },
-                reasoningEffort: remote.reasoningEffort.length > 0 ? remote.reasoningEffort : base.reasoningEffort,
-                reasoningDefault: remote.reasoningDefault ?? base.reasoningDefault,
-                serviceTier: remote.serviceTier
+                reasoningEffort,
+                reasoningDefault,
+                serviceTier: remote.serviceTier ?? base.serviceTier,
+                extraBody: withReasoningEffort(base.extraBody, reasoningDefault)
             };
         });
 }
