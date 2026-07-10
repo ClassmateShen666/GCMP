@@ -110,18 +110,17 @@ export class CodexModelProvider extends CliModelProvider {
 
         const refresh = this.getDynamicModels();
         return new Promise<ModelConfig[]>((resolve, reject) => {
-            let cancellation: vscode.Disposable | undefined;
-            cancellation = token.onCancellationRequested(() => {
-                cancellation?.dispose();
+            const cancellation = token.onCancellationRequested(() => {
+                cancellation.dispose();
                 reject(new vscode.CancellationError());
             });
             refresh.then(
                 models => {
-                    cancellation?.dispose();
+                    cancellation.dispose();
                     resolve(models);
                 },
                 error => {
-                    cancellation?.dispose();
+                    cancellation.dispose();
                     reject(error);
                 }
             );
