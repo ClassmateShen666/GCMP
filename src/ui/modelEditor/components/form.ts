@@ -540,11 +540,11 @@ function renderMultiSelectCheckboxOptions(
 
 function getServiceTierFormOptions(sdkMode: SdkMode): { value: ServiceTier; label: string }[] {
     const labels: Record<ServiceTier, string> = {
-        default: t('Default', '默认'),
-        auto: t('Auto', '自动'),
+        default: 'Default',
+        auto: 'Auto',
         flex: 'Flex',
-        priority: t('Priority', '优先'),
-        standard_only: t('Standard Only', '仅标准')
+        priority: 'Priority',
+        standard_only: 'Standard Only'
     };
     return getCompatibleServiceTierOptions(sdkMode).map(value => ({ value, label: labels[value] }));
 }
