@@ -146,7 +146,7 @@ export interface CompatibleModelConfig {
     contextSize?: number[];
     /**
      * 服务等级选项列表（可选）
-      * 数组首项作为模型选择器中的默认值。
+     * 数组首项作为模型选择器中的默认值。
      */
      serviceTier?: CompatibleServiceTier[];
     /**
