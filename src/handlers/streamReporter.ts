@@ -225,8 +225,11 @@ export class StreamReporter {
             if (thinking) {
                 this.emitThinking(thinking);
             }
-            this.endThinkingChainNow();
-            this.emitText(text);
+            if (text) {
+                this.emitText(text);
+            } else {
+                this.endThinkingChainNow();
+            }
             return;
         }
 
