@@ -194,14 +194,17 @@ export class StreamReporter {
         this.taggedThinkingPending += content;
 
         if (this.taggedThinkingState === 'detecting') {
-            if (
-                this.taggedThinkingPending.length < THINKING_OPEN_TAG.length &&
-                THINKING_OPEN_TAG.startsWith(this.taggedThinkingPending)
-            ) {
+            const firstContentIndex = this.taggedThinkingPending.search(/\S/);
+            if (firstContentIndex < 0) {
+                return;
+            }
+            const candidate = this.taggedThinkingPending.slice(firstContentIndex);
+
+            if (candidate.length < THINKING_OPEN_TAG.length && THINKING_OPEN_TAG.startsWith(candidate)) {
                 return;
             }
 
-            if (!this.taggedThinkingPending.startsWith(THINKING_OPEN_TAG)) {
+            if (!candidate.startsWith(THINKING_OPEN_TAG)) {
                 const text = this.taggedThinkingPending;
                 this.taggedThinkingPending = '';
                 this.taggedThinkingState = 'passthrough';
@@ -209,7 +212,7 @@ export class StreamReporter {
                 return;
             }
 
-            this.taggedThinkingPending = this.taggedThinkingPending.slice(THINKING_OPEN_TAG.length);
+            this.taggedThinkingPending = candidate.slice(THINKING_OPEN_TAG.length);
             this.taggedThinkingState = 'thinking';
         }
 

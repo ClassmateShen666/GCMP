@@ -178,6 +178,15 @@ test('reportText：thinking 标签可在任意字符边界分片', async () => {
     assertTaggedOutput(parts, '逐字符分片');
 });
 
+test('reportText：忽略 thinking 标签前跨分片的空白和 BOM', async () => {
+    const { reporter, parts } = await createReporter();
+
+    reporter.reportText('\uFEFF\n  <thin');
+    reporter.reportText('king>推理</thinking>答案');
+
+    assertTaggedOutput(parts);
+});
+
 test('reportText：空 thinking 标签不产生空思考链', async () => {
     const { reporter, parts } = await createReporter();
 
@@ -252,6 +261,7 @@ test('flushAll：不完整的开始标签按普通文本保留', async () => {
 test('reportText：普通文本和非协议标签保持原样', async () => {
     const inputs = [
         '普通正文',
+        '  普通正文',
         '前言<thinking>示例</thinking>答案',
         '<Thinking>示例</Thinking>答案',
         '<thinking type="hidden">示例</thinking>答案'
